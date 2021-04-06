@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "user_name": "user1",
+      "user_password": "user1"
+    },
+    {
+      "user_name": "user2",
+      "user_password": "user2"
+    },
+    {
+      "user_name": "user3",
+      "user_password": "user3"
+    },
+    {
+      "user_name": "user4",
+      "user_password": "user4"
+    }
+  ],
+  "songs": [
+    {
+      "song_genre": "genre1",
+      "song_year": "1988",
+      "song_performer": "performer1",
+      "song_title": "song1"
+    },
+    {
+      "song_genre": "genre2",
+      "song_year": "1989",
+      "song_performer": "performer2",
+      "song_title": "song2"
+    },
+    {
+      "song_genre": "genre3",
+      "song_year": "1990",
+      "song_performer": "performer3",
+      "song_title": "song3"
+    },
+    {
+      "song_genre": "genre4",
+      "song_year": "1991",
+      "song_performer": "performer4",
+      "song_title": "song4"
+    }
+  ]
+}
