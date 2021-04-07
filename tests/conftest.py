@@ -8,7 +8,7 @@ import json
 def json_config():
     do.delete_all_users()
     do.delete_all_songs()
-    with open('config.json') as fp:
+    with open('tests/config.json') as fp:
         js_config = json.load(fp)
     for i in js_config['users']:
         do.add_user(i)
