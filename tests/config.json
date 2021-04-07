@@ -42,5 +42,19 @@
       "song_performer": "performer4",
       "song_title": "song4"
     }
+  ],
+  "playlists": [
+    {
+      "playlist_name": "pl1"
+    },
+    {
+      "playlist_name": "pl2"
+    },
+    {
+      "playlist_name": "pl3"
+    },
+    {
+      "playlist_name": "pl4"
+    }
   ]
 }
