@@ -12,6 +12,14 @@ def test_add_user(json_config):
     assert tests_logic.validate_user_exist(res, user['user_name']), user['user_name'] + ' not found'
 
 
+# add user -> get user and validate it is exist
+def test_add_user_that_already_exist(json_config):
+    user = json_config['users'][1]
+    #user = tests_logic.build_user_dictionary('dotan', '123456')
+    res = request_actions.add_user(user)
+    assert tests_logic.found_error(res), 'expected to have error'
+
+
 @pytest.mark.parametrize('rank, op, expected',
                          [('0', 'greater', ['song1', 'song2', 'song3']), ('2', 'less', ['song3', 'song4']),
                           ('3', 'eq', ['song1', 'song2'])])
