@@ -1,25 +1,28 @@
 import rest_sender.send as send
 
 
-def add_user(body):
+def add_user(user, pwd):
+    body = {'user_name': user, 'user_password': pwd}
     return send.post("users/add_user", body)
 
 
-def get_user(user):
-    return send.get("users/get_user?user_name=" + user['user_name'])
+def get_user(user_name):
+    return send.get("users/get_user?user_name=" + user_name)
 
 
-def add_friend(user1, user2):
-    body = {**user1, 'friend_name': user2['user_name']}
+def add_friend(user, pwd, user2):
+    body = {'user_name': user, 'user_password': pwd, 'friend_name': user2}
     return send.put("users/add_friend", body)
 
 
-def add_playlist(user, playlist):
-    body = {**user, **playlist}
+def add_playlist(user, pwd, playlist_name):
+    body = {'user_name': user, 'user_password': pwd, 'playlist_name': playlist_name}
     return send.post("users/add_playlist", body)
 
 
-def add_song(body):
+def add_song(song_genre, song_year, song_performer, song_title):
+    body = {'song_genre': song_genre, 'song_year': song_year, 'song_performer': song_performer,
+            'song_title': song_title}
     return send.post("songs/add_song", body)
 
 
@@ -27,24 +30,24 @@ def get_song(song_title):
     return send.get("songs/get_song?song_title=" + song_title)
 
 
-def song_upvote(user, playlist, song):
-    body = {**user, **playlist, 'song_title': song['song_title']}
+def song_upvote(user, pwd, playlist_name, song_name):
+    body = {'user_name': user, 'user_password': pwd, 'playlist_name': playlist_name, 'song_title': song_name}
     return send.put("songs/upvote", body)
 
 
-def song_downvote(user, playlist, song):
-    body = {**user, **playlist, 'song_title': song['song_title']}
+def song_downvote(user, pwd, playlist_name, song_name):
+    body = {'user_name': user, 'user_password': pwd, 'playlist_name': playlist_name, 'song_title': song_name}
     return send.put("songs/downvote", body)
 
 
-def add_song_to_playlist(user, playlist, song):
-    body = {**user, **playlist, 'song_title': song['song_title']}
+def add_song_to_playlist(user, pwd, playlist_name, song_name):
+    body = {'user_name': user, 'user_password': pwd, 'playlist_name': playlist_name, 'song_title': song_name}
     return send.post("playlists/add_song", body)
 
 
-def get_playlist(user, playlist_name):
+def get_playlist(user, pwd, playlist_name):
     return send.get(
-        "users/get_playlist?user_name=" + user['user_name'] + '&user_password=' + user['user_password'] + '&playlist_name=' + playlist_name)
+        "users/get_playlist?user_name=" + user + '&user_password=' + pwd + '&playlist_name=' + playlist_name)
 
 
 def get_song_by_rank(rank, op):
@@ -52,8 +55,8 @@ def get_song_by_rank(rank, op):
         "songs/ranked_songs?rank=" + rank + '&op=' + op)
 
 
-def change_password(user, new_password):
-    body = {**user, 'user_new_password': new_password}
+def change_password(user, old_pwd, new_password):
+    body = {'user_name': user, 'user_password': old_pwd, 'user_new_password': new_password}
     return send.put("users/change_password", body)
 
 
