@@ -90,12 +90,11 @@ def create_songs_ranked():
                 request_actions.song_upvote(f'user{i}', f'pwd{i}', f'pl{i}', f'song_for_vote{j}')
 
 
-def extract_songs_list(res):
-    return res['data']
-
-
-def compare_lists():
-    pass
+def create_user_pl_song(user, pwd, pl, genere, year, performer, title):
+    request_actions.add_user(user, pwd)
+    request_actions.add_song(genere, year, performer, title)
+    request_actions.add_playlist(user, pwd, pl)
+    request_actions.add_song_to_playlist(user, pwd, pl, title)
 
 
 

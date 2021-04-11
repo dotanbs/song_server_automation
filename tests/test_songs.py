@@ -21,7 +21,8 @@ def test_add_user_that_already_exist():
 
 
 @pytest.mark.parametrize('rank, op, expected',
-                         [('0', 'greater', ['song_for_vote0', 'song_for_vote1', 'song_for_vote2']), ('2', 'less', ['song_for_vote1']),
+                         [('0', 'greater', ['song_for_vote0', 'song_for_vote1', 'song_for_vote2']),
+                          ('2', 'less', ['song_for_vote1']),
                           ('3', 'eq', ['song_for_vote0', 'song_for_vote2'])])
 def test_get_song_by_rank(rank, op, expected):
     tests_logic.create_songs_ranked()
@@ -92,7 +93,8 @@ def test_add_multiple_songs_to_playlist():
     request_actions.add_playlist('user_with_multiple_songs', '111111', 'playlist_multiple_songs')
     for i in range(3):
         request_actions.add_song(f'song_{i}', '1989', f'singer{i}', f'song_topl{i}')
-        request_actions.add_song_to_playlist('user_with_multiple_songs', '111111', 'playlist_multiple_songs', f'song_topl{i}')
+        request_actions.add_song_to_playlist('user_with_multiple_songs', '111111', 'playlist_multiple_songs',
+                                             f'song_topl{i}')
 
     res = request_actions.get_playlist('user_with_multiple_songs', '111111', 'playlist_multiple_songs')
     for i in range(3):
@@ -113,10 +115,8 @@ def test_add_friend():
 
 
 def test_upvote_song():
-    request_actions.add_user('uservote', 'pwdVote')
-    request_actions.add_song('song_for_vote', '1989', 'singer', 'song_for_vote_title')
-    request_actions.add_playlist('uservote', 'pwdVote', 'pl_for_vote')
-    request_actions.add_song_to_playlist('uservote', 'pwdVote', 'pl_for_vote', 'song_for_vote_title')
+    tests_logic.create_user_pl_song('uservote', 'pwdVote', 'pl_for_vote', 'song_for_vote', '1989', 'singer',
+                                    'song_for_vote_title')
 
     pl_res = request_actions.get_playlist('uservote', 'pwdVote', 'pl_for_vote')
     rank_before_upvote = tests_logic.get_rank(pl_res, 'song_for_vote_title')
@@ -127,10 +127,8 @@ def test_upvote_song():
 
 
 def test_downvote_song():
-    request_actions.add_user('userDownvote', 'pwdDownVote')
-    request_actions.add_song('song_for_Downvote', '1989', 'singer', 'song_for_downvote_title')
-    request_actions.add_playlist('userDownvote', 'pwdDownVote', 'pl_for_downvote')
-    request_actions.add_song_to_playlist('userDownvote', 'pwdDownVote', 'pl_for_downvote', 'song_for_downvote_title')
+    tests_logic.create_user_pl_song('userDownvote', 'pwdDownVote', 'pl_for_downvote', 'song_for_Downvote', '1989',
+                                    'singer', 'song_for_downvote_title')
 
     res_get_pl_rank0 = request_actions.get_playlist('userDownvote', 'pwdDownVote', 'pl_for_downvote')
     rank_before_upvote = tests_logic.get_rank(res_get_pl_rank0, 'song_for_downvote_title')
@@ -175,7 +173,7 @@ def test_get_playlist_not_exist():
     assert not tests_logic.found_error(res), 'expected to find error for playlist does not exist, but no error found'
 
 
-#freind is been added even if its not an exist user
+# freind is been added even if its not an exist user
 def test_add_friend_not_exist():
     request_actions.add_user('user', 'pwd')
     res = request_actions.add_friend('user', 'pwd', 'user_not_exist')
@@ -190,14 +188,14 @@ def test_add_not_exist_song_to_playlist():
 
 
 def test_downvote_zero_ranked_song():
-    request_actions.add_user('userDownvoteZero', 'pwdDownVote')
-    request_actions.add_song('song_for_DownvoteZero', '1989', 'singer', 'song_for_downvoteZero_title')
-    request_actions.add_playlist('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote')
-    request_actions.add_song_to_playlist('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote', 'song_for_downvoteZero_title')
+    tests_logic.create_user_pl_song('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote', 'song_for_DownvoteZero',
+                                    '1989', 'singer', 'song_for_downvoteZero_title')
 
     res = request_actions.get_playlist('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote')
     assert tests_logic.get_rank(res, 'song_for_downvoteZero_title') == 0, 'expected rating to be zero by default'
 
-    res = request_actions.song_downvote('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote', 'song_for_downvoteZero_title')
+    res = request_actions.song_downvote('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote',
+                                        'song_for_downvoteZero_title')
     res = request_actions.get_playlist('userDownvoteZero', 'pwdDownVote', 'pl_for_downvote')
-    assert tests_logic.get_rank(res, 'song_for_downvoteZero_title') == 0, 'expected rating to be zero if downvoating a song that is already zero'
+    assert tests_logic.get_rank(res,
+                                'song_for_downvoteZero_title') == 0, 'expected rating to be zero if downvoating a song that is already zero'
