@@ -8,15 +8,6 @@ import json
 def json_config():
     do.delete_all_users()
     do.delete_all_songs()
-    # with open('config.json') as fp:
-    #     js_config = json.load(fp)
-    # for i in js_config['users']:
-    #     do.add_user(i)
-    # for i in js_config['songs']:
-    #     do.add_song(i)
-    # do.add_playlist(js_config['users'][2], js_config['playlists'][2])
-    # do.add_song_to_playlist(js_config['users'][2], js_config['playlists'][2], js_config['songs'][2])
-    # yield js_config
 
 
 
